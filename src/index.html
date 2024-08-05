@@ -14,50 +14,163 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./main.css" />
-
+    <link rel="stylesheet" href="./tailwind.css" />
+    <script type="module" src="../dist/script.js" defer></script>
     <title>Minimaldoro</title>
   </head>
-  <body>
-    <header>
-      <div class="toggle-mode">
-        <button class="light">
-          <img src="public/assets/icons/light-mode.svg" />
-        </button>
-        <button class="dark">
-          <img src="public/assets/icons/dark-mode.svg" />
-        </button>
-      </div>
-    </header>
-    <main>
-      <div class="timer">
-        <span class="minutes">25</span>
-        <span>:</span>
-        <span class="seconds">00</span>
-      </div>
-      <div class="controls">
-        <button class="play" id="play">
-          <img src="public/assets/icons/play.svg" />
-        </button>
-        <button class="pause" id="pause">
-          <img src="public/assets/icons/pause.svg" />
-        </button>
-        <button class="replay" id="replay">
-          <img src="public/assets/icons/replay.svg" />
-        </button>
-        <button class="set-time" id="set-time">
-          <img src="public/assets/icons/clock.svg" />
-        </button>
-      </div>
-    </main>
 
-    <footer>
-      <button class="sound-on">
-        <img src="public/assets/icons/volume-on.svg" />
-      </button>
-      <button class="sound-off">
-        <img src="public/assets/icons/volume-off.svg" />
-      </button>
-    </footer>
+  <body class="min-h-screen flex flex-col bg-gray-950">
+    <div id="container" class="flex flex-col flex-grow justify-between p-10">
+      <header class="flex justify-end items-center h-16">
+        <div id="toggle-mode" class="toggle-mode">
+          <button class="light">
+            <svg
+              id="light"
+              class="hide"
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#faf6eb"
+            >
+              <path
+                d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"
+              />
+            </svg>
+          </button>
+          <button class="dark">
+            <svg
+              id="dark"
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#faf6eb"
+            >
+              <path
+                d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="flex flex-col items-center justify-center flex-grow">
+        <div
+          id="rounds"
+          class="bg-slate-800 rounded-full flex p-4 justify-center"
+        >
+          <span class="minutes font-fontInter text-2xl text-textColor font-bold"
+            >1/4</span
+          >
+        </div>
+        <div id="timer" class="my-6">
+          <span
+            class="minutes font-fontInter md:text-8xl text-7xl text-textColor font-bold"
+            >00</span
+          >
+          <span class="md:text-8xl text-7xl font-bold text-textColor">:</span>
+          <span
+            class="seconds font-fontInter md:text-8xl text-7xl text-textColor font-bold"
+            >00</span
+          >
+        </div>
+        <div
+          id="controls"
+          class="controls bg-slate-800 rounded-full p-3 flex justify-center mb-6"
+        >
+          <button class="play">
+            <svg
+              id="play"
+              class="icon-actived"
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#faf6eb"
+            >
+              <path
+                d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+              />
+            </svg>
+          </button>
+          <button class="pause">
+            <svg
+              id="pause"
+              class="hide"
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#faf6eb"
+            >
+              <path
+                d="M360-320h80v-320h-80v320Zm160 0h80v-320h-80v320ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+              />
+            </svg>
+          </button>
+          <button class="replay ml-2">
+            <svg
+              id="replay"
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#faf6eb"
+            >
+              <path
+                d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
+              />
+            </svg>
+          </button>
+          <!-- <button class="set-time">
+            <svg
+              id="set-time"
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#63A375"
+            >
+              <path
+                d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z"
+              />
+            </svg>
+          </button> -->
+        </div>
+      </main>
+
+      <footer id="footer" class="flex justify-end items-center h-16">
+        <button class="sound-on icon-actived">
+          <svg
+            id="sound-on"
+            xmlns="http://www.w3.org/2000/svg"
+            height="40px"
+            viewBox="0 -960 960 960"
+            width="40px"
+            fill="#faf6eb"
+          >
+            <path
+              d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z"
+            />
+          </svg>
+        </button>
+        <button class="sound-off">
+          <svg
+            id="sound-off"
+            class="hide"
+            xmlns="http://www.w3.org/2000/svg"
+            height="40px"
+            viewBox="0 -960 960 960"
+            width="40px"
+            fill="#faf6eb"
+          >
+            <path
+              d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Zm-80 238v-94l-72-72H200v80h114l86 86Zm-36-130Z"
+            />
+          </svg>
+        </button>
+      </footer>
+    </div>
   </body>
 </html>
