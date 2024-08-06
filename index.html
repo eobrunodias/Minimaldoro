@@ -2,20 +2,16 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=
-  , initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./tailwind.css" />
-    <script type="module" src="../dist/script.js" defer></script>
+    <link rel="stylesheet" href="./src/styles/tailwind.css" />
+    <script type="module" src="src/index.ts" defer></script>
     <title>Minimaldoro</title>
   </head>
 
@@ -57,32 +53,36 @@
 
       <main class="flex flex-col items-center justify-center flex-grow">
         <div
-          id="rounds"
-          class="bg-slate-800 rounded-full flex p-4 justify-center"
+          id="rounds-container"
+          class="rounds-container bg-slate-800 rounded-full flex p-4 justify-center"
         >
-          <span class="minutes font-fontInter text-2xl text-textColor font-bold"
+          <span
+            id="rounds"
+            class="rounds font-fontInter text-2xl text-textColor font-bold"
             >1/4</span
           >
         </div>
-        <div id="timer" class="my-6">
+        <div id="timer" class="timer my-6 cursor-pointer">
           <span
+            id="minutes"
             class="minutes font-fontInter md:text-8xl text-7xl text-textColor font-bold"
             >00</span
           >
           <span class="md:text-8xl text-7xl font-bold text-textColor">:</span>
           <span
+            id="seconds"
             class="seconds font-fontInter md:text-8xl text-7xl text-textColor font-bold"
             >00</span
           >
         </div>
         <div
           id="controls"
-          class="controls bg-slate-800 rounded-full p-3 flex justify-center mb-6"
+          class="controls bg-slate-800 rounded-full p-3 flex justify-center"
         >
           <button class="play">
             <svg
               id="play"
-              class="icon-actived"
+              class="icon-actived mr-2"
               xmlns="http://www.w3.org/2000/svg"
               height="40px"
               viewBox="0 -960 960 960"
@@ -109,7 +109,7 @@
               />
             </svg>
           </button>
-          <button class="replay ml-2">
+          <button class="replay">
             <svg
               id="replay"
               xmlns="http://www.w3.org/2000/svg"

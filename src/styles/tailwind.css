@@ -588,12 +588,33 @@ video {
   }
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .flex {
   display: flex;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .flex-col {
@@ -604,12 +625,16 @@ video {
   align-items: center;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
 .justify-center {
   justify-content: center;
 }
 
-.gap-2 {
-  gap: 0.5rem;
+.justify-between {
+  justify-content: space-between;
 }
 
 .rounded-full {
@@ -638,17 +663,13 @@ video {
   padding: 1rem;
 }
 
-.text-right {
-  text-align: right;
-}
-
 .font-fontInter {
-  font-family: Inter, sans-serif;
+  font-family: Chivo Mono, sans-serif;
 }
 
-.text-6xl {
-  font-size: 3.75rem;
-  line-height: 1;
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-7xl {
@@ -665,6 +686,11 @@ video {
   color: rgb(250 246 235 / var(--tw-text-opacity));
 }
 
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -679,4 +705,65 @@ video {
   fill: #63a375;
 }
 
+.input-time {
+  caret-color: #63a375;
+  border-radius: 40px;
+  border: solid 2px #63a375;
+  /* caret-shape: inherit; */
+  font-family: "Chivo Mono";
+  color: #faf6eb;
+  font-weight: bold;
+  font-size: 96px;
+  outline: none;
+  background: none;
+  line-height: 1rem;
+  width: 2ch;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+  box-sizing: content-box;
+}
+
+.light-mode {
+  background-color: #faf6eb;
+  color: #030712;
+  header button svg,
+  footer button svg {
+    fill: #030712;
+  }
+  .input-time {
+    color: #030712;
+    border: solid 2px #030712;
+    caret-color: #030712;
+  }
+  .timer span {
+    color: #030712;
+  }
+  .controls {
+    color: #faf6eb;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-time {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+}
+
+/* Remove number arrows of browser */
+
+.input-time::-webkit-outer-spin-button,
+.input-time::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* Apply */
+
+@media (min-width: 768px) {
+  .md\:text-8xl {
+    font-size: 6rem;
+    line-height: 1;
+  }
+}

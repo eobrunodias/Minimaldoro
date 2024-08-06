@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hide {
+  display: none;
+}
+
+.icon-actived {
+  fill: #63a375;
+}
+
+.input-time {
+  caret-color: #63a375;
+  border-radius: 40px;
+  border: solid 2px #63a375;
+
+  /* caret-shape: inherit; */
+  font-family: "Chivo Mono";
+  color: #faf6eb;
+  font-weight: bold;
+  font-size: 96px;
+  outline: none;
+  background: none;
+  line-height: 1rem;
+  width: 2ch;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+  box-sizing: content-box;
+}
+
+.light-mode {
+  background-color: #faf6eb;
+  color: #030712;
+
+  header button svg,
+  footer button svg {
+    fill: #030712;
+  }
+
+  .input-time {
+    color: #030712;
+    border: solid 2px #030712;
+    caret-color: #030712;
+  }
+
+  .timer span {
+    color: #030712;
+  }
+
+  .controls {
+    color: #faf6eb;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-time {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+}
+
+/* Remove number arrows of browser */
+.input-time::-webkit-outer-spin-button,
+.input-time::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Apply */
+@layer components {
+  .btn-icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}
