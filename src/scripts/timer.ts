@@ -5,7 +5,7 @@ displayMinutes?.addEventListener("click", (e) => {
   const target = e.target as HTMLElement;
 
   const minutesElement = target as HTMLElement;
-  const currentMinutes = minutesElement.textContent || "00";
+  const currentMinutes = minutesElement.textContent?.trim() || "00";
   const inputMinutes = document.createElement("input");
 
   inputMinutes.classList.add("input-time");
@@ -16,12 +16,11 @@ displayMinutes?.addEventListener("click", (e) => {
   inputMinutes.max = "60";
   inputMinutes.step = "1";
 
-  if (parseInt(inputMinutes.value) > 60) {
-    inputMinutes.value = "60";
-  }
-
   inputMinutes.addEventListener("blur", () => {
-    minutesElement.textContent = inputMinutes.value.padStart(2, "0");
+    let value = parseInt(inputMinutes.value, 10);
+    if (isNaN(value) || value < 0) value = 0;
+    if (value > 60) value = 60;
+    minutesElement.textContent = value.toString().padStart(2, "0");
     inputMinutes.replaceWith(minutesElement);
   });
 
