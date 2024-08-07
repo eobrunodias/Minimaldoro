@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="public/assets/icons/clock.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./src/assets/icons/clock.svg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,11 +17,11 @@
 
   <body class="min-h-screen flex flex-col bg-gray-950">
     <audio id="background-sound" loop>
-      <source src="./public/assets/music/sound.mp3" type="audio/mpeg">
+      <source src="./src/assets/music/sound.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="break-sound" loop>
-      <source src="./public/assets/music/break.mp3" type="audio/mpeg">
+      <source src="./src/assets/music/break.mp3" type="audio/mpeg">
     </audio>
 
     <div id="container" class="flex flex-col flex-grow justify-between p-10">
@@ -85,7 +85,7 @@
       >1/<span class="total-rounds">4</span></span
       >
     </div>
-    <span id="break-tag" class="cursor-pointer mt-4 uppercase font-bold tracking-widest text-[#ff006a] text-sm bg-slate-800 rounded-full hidden px-3">break</span>
+    <span id="break-tag" class="cursor-pointer mt-4 uppercase font-bold tracking-widest text-[#ff2d5a] text-sm bg-slate-800 rounded-full hidden px-3  py-1">break</span>
 
         <div id="timer" class="timer my-6 cursor-pointer">
           <input
