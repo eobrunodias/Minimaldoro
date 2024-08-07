@@ -1,80 +1,83 @@
-import { togglePause } from "./controls";
+import { addClass, removeClass } from "../utils/handle-class-atribute";
+// import { inputSeconds, inputMinutes, playBtn, pauseBtn } from "./elements-hall";
 
 const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
 const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
-const play = document.querySelector<HTMLInputElement>("#play");
-const pause = document.querySelector<HTMLInputElement>("#pause");
+const inputs = document.querySelectorAll("input");
+const playBtn = document.querySelector<HTMLButtonElement>("#play");
+const pauseBtn = document.querySelector<HTMLButtonElement>("#pause");
+const rounds = document.querySelector<HTMLSpanElement>("#rounds");
+const resetRounds = document.querySelector<HTMLSpanElement>("#reset-rounds");
 
-let isPaused = false;
+let isPause = true;
+let minutesDigited = "00";
+let secondsDigited = "00";
 
-let valueMinutes = inputMinutes?.getAttribute("value");
-let valueSeconds = inputSeconds?.getAttribute("value");
-
-togglePause();
-
-inputMinutes?.getAttribute("value");
-
-function addClass(element: Element, className: String) {
-  element?.classList.add(className as string);
-}
-
-function removeClass(element: Element, className: String) {
-  element?.classList.remove(className as string);
-}
-
-function addStyleMinutes() {
-  if (inputMinutes) {
-    addClass(inputMinutes, "input-actived");
-  }
-}
-
-inputMinutes?.addEventListener("input", (e: Event) => {
-  const target = e.target as HTMLInputElement;
-
-  if (target.value === "e") {
-    target.value;
+resetRounds?.addEventListener("click", () => {
+  if (rounds) {
+    rounds.innerHTML = `${1}/<span class="total-rounds">4</span>`;
   }
 
-  if (target.value.length > 2) {
-    target.value = target.value.slice(0, 2);
-  }
+  resetRounds?.classList.add("icon-actived");
 
-  if (target.value > "59") {
-    target.value = "59";
-  }
-
-  valueMinutes = target.value;
-  console.log(valueMinutes);
-  console.log(target.value);
-
-  let minutesConverted = Number(valueMinutes);
-  console.log(minutesConverted);
-  console.log(valueMinutes);
+  setTimeout(() => {
+    resetRounds?.classList.remove("icon-actived");
+  }, 1000);
 });
 
-inputMinutes?.addEventListener("keydown", (e: KeyboardEvent) => {
-  if (
-    e.key === "e" ||
-    e.key === "E" ||
-    e.key === "," ||
-    e.key === "." ||
-    e.key === "-"
-  ) {
-    e.preventDefault();
+inputMinutes?.addEventListener("input", () => {
+  if (inputMinutes.value.length > 2) {
+    inputMinutes.value = inputMinutes.value.slice(0, 2);
   }
+
+  if (Number(inputMinutes.value) > 59) {
+    inputMinutes.value = "59";
+  }
+
+  minutesDigited = inputMinutes.value;
 });
 
-inputMinutes?.addEventListener("focus", addStyleMinutes);
+inputSeconds?.addEventListener("input", () => {
+  if (inputSeconds.value.length > 2) {
+    inputSeconds.value = inputSeconds.value.slice(0, 2);
+  }
 
-inputMinutes?.addEventListener("blur", (e) => {
+  if (Number(inputSeconds.value) > 59) {
+    inputSeconds.value = "59";
+  }
+
+  secondsDigited = inputSeconds.value;
+});
+
+inputs?.forEach((input) => {
+  input.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (
+      e.key === "e" ||
+      e.key === "E" ||
+      e.key === "," ||
+      e.key === "." ||
+      e.key === "-"
+    ) {
+      e.preventDefault();
+    }
+  });
+});
+
+inputMinutes?.addEventListener("focus", () =>
+  addClass(inputMinutes, "input-actived")
+);
+
+inputSeconds?.addEventListener("focus", () =>
+  addClass(inputSeconds, "input-actived")
+);
+
+inputMinutes?.addEventListener("blur", () => {
   if (inputMinutes) {
     removeClass(inputMinutes, "input-actived");
   }
 
-  const target = e.target as HTMLInputElement;
-
-  if (target.value === "") {
-    target.value = "00";
+  if (inputMinutes.value === "") {
+    inputMinutes.value = "00";
   }
 
   if (inputMinutes.value.length < 2) {
@@ -82,67 +85,93 @@ inputMinutes?.addEventListener("blur", (e) => {
   }
 });
 
-console.log("cheguei aq");
-console.log(valueMinutes);
+inputSeconds?.addEventListener("blur", () => {
+  if (inputSeconds) {
+    removeClass(inputSeconds, "input-actived");
+  }
 
+  if (inputSeconds.value === "") {
+    inputSeconds.value = "00";
+  }
+
+  if (inputSeconds.value.length < 2) {
+    inputSeconds.value = inputSeconds.value.padStart(2, "0");
+  }
+});
+
+let intervalId: number | undefined;
 function countdown() {
-  if (isPaused) {
-    isPaused = true;
-    enableInput();
-  } else {
-    isPaused = false;
-    disableInput();
+  if (!isPause) {
+    if (!inputMinutes || !inputSeconds) return;
 
-    setTimeout(() => {
-      if (Number(inputMinutes?.value) === 0 || isPaused) {
-        return;
+    if (Number(inputMinutes.value) === 0 && Number(inputSeconds.value) === 0) {
+      if (rounds) {
+        const [currentRound, totalRounds] = rounds.innerText.split("/");
+        const newRound = (Number(currentRound) + 1).toString();
+        rounds.innerHTML = `${newRound}/<span class="total-rounds">${totalRounds}</span>`;
+
+        inputMinutes.value = minutesDigited;
+        inputSeconds.value = secondsDigited;
+        countdown();
       }
+      return;
+    }
 
-      if (Number(inputMinutes?.value) === 0 && !isPaused) {
-        togglePause();
-        isPaused = true;
-        return;
+    if (Number(inputSeconds.value) > 0) {
+      inputSeconds.value = String(Number(inputSeconds.value) - 1).padStart(
+        2,
+        "0"
+      );
+    } else if (Number(inputMinutes.value) > 0) {
+      inputMinutes.value = String(Number(inputMinutes.value) - 1).padStart(
+        2,
+        "0"
+      );
+      inputSeconds.value = "59";
+    }
+  }
+
+  intervalId = setTimeout(countdown, 1000);
+}
+
+function play() {
+  playBtn?.addEventListener("click", () => {
+    console.log(inputMinutes?.value, inputSeconds?.value);
+    if (inputMinutes?.value === "00" && inputSeconds?.value === "00") return;
+
+    if (isPause) {
+      isPause = false;
+
+      inputs.forEach((input) => {
+        input.disabled = true;
+      });
+
+      if (intervalId) {
+        clearInterval(intervalId);
       }
-
-      if (inputMinutes) {
-        if (Number(inputSeconds?.value) === 0) {
-          inputMinutes.value = String(Number(inputMinutes?.value) - 1);
-
-          if (inputMinutes.value.length < 2) {
-            inputMinutes.value = inputMinutes.value.padStart(2, "0");
-          }
-        }
-      }
-
-      console.log(Number(inputMinutes?.value));
 
       countdown();
-    }, 1000);
-  }
+    }
+
+    return;
+  });
 }
+play();
 
-play?.addEventListener("click", () => {
-  countdown();
-});
+function pause() {
+  pauseBtn?.addEventListener("click", () => {
+    if (!isPause) {
+      isPause = true;
 
-function disableInput() {
-  if (inputMinutes) {
-    inputMinutes.disabled = true;
-  }
+      inputs.forEach((input) => {
+        input.disabled = false;
+      });
+
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    }
+    return;
+  });
 }
-
-function enableInput() {
-  if (inputMinutes) {
-    inputMinutes.disabled = false;
-  }
-}
-
-pause?.addEventListener("click", () => {
-  if (isPaused) {
-    isPaused = false;
-    disableInput();
-  } else {
-    isPaused = true;
-    enableInput();
-  }
-});
+pause();
