@@ -1,34 +1,35 @@
-const buttonPlay = document.querySelector("#play");
-const buttonPause = document.querySelector("#pause");
-const buttonReplay = document.querySelector("#replay");
+import {
+  inputMinutes,
+  inputSeconds,
+  pauseBtn,
+  playBtn,
+  replayBtn,
+} from "./elements";
 
-const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
-const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
-
-export function pauseBtn() {
-  buttonPause?.addEventListener("click", () => {
-    buttonPause?.classList.add("hide");
-    buttonPlay?.classList.remove("hide");
-    buttonReplay?.classList.remove("hide");
+export function pause() {
+  pauseBtn?.addEventListener("click", () => {
+    pauseBtn?.classList.add("hide");
+    playBtn?.classList.remove("hide");
+    replayBtn?.classList.remove("hide");
   });
 }
 
-export function playBtn() {
-  buttonPlay?.addEventListener("click", () => {
+export function play() {
+  playBtn?.addEventListener("click", () => {
     if (inputSeconds?.value === "00" && inputMinutes?.value === "00") return;
 
-    buttonPlay?.classList.add("hide");
-    buttonPause?.classList.remove("hide");
-    buttonReplay?.classList.add("hide");
+    playBtn?.classList.add("hide");
+    pauseBtn?.classList.remove("hide");
+    replayBtn?.classList.add("hide");
   });
 }
 
-export function replayBtn() {
-  buttonReplay?.addEventListener("click", () => {
-    buttonReplay?.classList.add("icon-actived");
+export function replay() {
+  replayBtn?.addEventListener("click", () => {
+    replayBtn?.classList.add("icon-actived");
 
     setTimeout(() => {
-      buttonReplay?.classList.remove("icon-actived");
+      replayBtn?.classList.remove("icon-actived");
     }, 1000);
 
     if (inputSeconds && inputMinutes) {

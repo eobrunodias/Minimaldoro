@@ -1,5 +1,4 @@
-const inputSeconds = document.querySelector("#seconds");
-const inputMinutes = document.querySelector("#minutes");
+import { inputMinutes, inputSeconds } from "./elements";
 
 if (
   inputMinutes?.getAttribute("value") === "00" &&

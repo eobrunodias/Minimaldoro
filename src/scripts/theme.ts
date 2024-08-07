@@ -1,5 +1,4 @@
-const lightTheme = document.querySelector("#light");
-const darkTheme = document.querySelector("#dark");
+import { darkTheme, lightTheme } from "./elements";
 
 export function handleToggleTheme() {
   darkTheme?.addEventListener("click", () => {
@@ -10,7 +9,7 @@ export function handleToggleTheme() {
   });
 
   lightTheme?.addEventListener("click", () => {
-    lightTheme.classList.add("hide");
+    lightTheme?.classList.add("hide");
     darkTheme?.classList.remove("hide");
 
     document.body.classList.remove("light-mode");
