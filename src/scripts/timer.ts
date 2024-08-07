@@ -1,9 +1,16 @@
+import { togglePause } from "./controls";
+
 const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
 const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
 const play = document.querySelector<HTMLInputElement>("#play");
+const pause = document.querySelector<HTMLInputElement>("#pause");
+
+let isPaused = false;
 
 let valueMinutes = inputMinutes?.getAttribute("value");
 let valueSeconds = inputSeconds?.getAttribute("value");
+
+togglePause();
 
 inputMinutes?.getAttribute("value");
 
@@ -18,7 +25,6 @@ function removeClass(element: Element, className: String) {
 function addStyleMinutes() {
   if (inputMinutes) {
     addClass(inputMinutes, "input-actived");
-    // valueMinutes = inputMinutes.innerHTML;
   }
 }
 
@@ -46,9 +52,14 @@ inputMinutes?.addEventListener("input", (e: Event) => {
   console.log(valueMinutes);
 });
 
-// prevents the caracter "e"
 inputMinutes?.addEventListener("keydown", (e: KeyboardEvent) => {
-  if (e.key === "e" || e.key === "E") {
+  if (
+    e.key === "e" ||
+    e.key === "E" ||
+    e.key === "," ||
+    e.key === "." ||
+    e.key === "-"
+  ) {
     e.preventDefault();
   }
 });
@@ -65,23 +76,73 @@ inputMinutes?.addEventListener("blur", (e) => {
   if (target.value === "") {
     target.value = "00";
   }
+
+  if (inputMinutes.value.length < 2) {
+    inputMinutes.value = inputMinutes.value.padStart(2, "0");
+  }
 });
 
 console.log("cheguei aq");
 console.log(valueMinutes);
 
-play?.addEventListener("click", () => {
-  let minutesConverted = Number(valueMinutes);
+function countdown() {
+  if (isPaused) {
+    isPaused = true;
+    enableInput();
+  } else {
+    isPaused = false;
+    disableInput();
 
-  // fora do while
-  console.log("fora");
-  if (minutesConverted > 0) {
-    console.log("dentro");
+    setTimeout(() => {
+      if (Number(inputMinutes?.value) === 0 || isPaused) {
+        return;
+      }
 
-    setInterval(() => {
-      --minutesConverted;
-      console.log(minutesConverted);
-      console.log(valueMinutes);
+      if (Number(inputMinutes?.value) === 0 && !isPaused) {
+        togglePause();
+        isPaused = true;
+        return;
+      }
+
+      if (inputMinutes) {
+        if (Number(inputSeconds?.value) === 0) {
+          inputMinutes.value = String(Number(inputMinutes?.value) - 1);
+
+          if (inputMinutes.value.length < 2) {
+            inputMinutes.value = inputMinutes.value.padStart(2, "0");
+          }
+        }
+      }
+
+      console.log(Number(inputMinutes?.value));
+
+      countdown();
     }, 1000);
+  }
+}
+
+play?.addEventListener("click", () => {
+  countdown();
+});
+
+function disableInput() {
+  if (inputMinutes) {
+    inputMinutes.disabled = true;
+  }
+}
+
+function enableInput() {
+  if (inputMinutes) {
+    inputMinutes.disabled = false;
+  }
+}
+
+pause?.addEventListener("click", () => {
+  if (isPaused) {
+    isPaused = false;
+    disableInput();
+  } else {
+    isPaused = true;
+    enableInput();
   }
 });
