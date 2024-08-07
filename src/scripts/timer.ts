@@ -1,21 +1,25 @@
 import { addClass, removeClass } from "../utils/handle-class-atribute";
-// import { inputSeconds, inputMinutes, playBtn, pauseBtn } from "./elements-hall";
 
 const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
 const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
 const inputs = document.querySelectorAll("input");
 const playBtn = document.querySelector<HTMLButtonElement>("#play");
 const pauseBtn = document.querySelector<HTMLButtonElement>("#pause");
+const replayBtn = document.querySelector<HTMLButtonElement>("#replay");
 const rounds = document.querySelector<HTMLSpanElement>("#rounds");
 const resetRounds = document.querySelector<HTMLSpanElement>("#reset-rounds");
+const breakTag = document.querySelector<HTMLSpanElement>("#break-tag");
 
 let isPause = true;
 let minutesDigited = "00";
 let secondsDigited = "00";
+let isCounting = false;
+let isBreak = false;
+let intervalId: number | undefined;
 
 resetRounds?.addEventListener("click", () => {
   if (rounds) {
-    rounds.innerHTML = `${1}/<span class="total-rounds">4</span>`;
+    rounds.innerHTML = `1/<span class="total-rounds">4</span>`;
   }
 
   resetRounds?.classList.add("icon-actived");
@@ -99,79 +103,103 @@ inputSeconds?.addEventListener("blur", () => {
   }
 });
 
-let intervalId: number | undefined;
-function countdown() {
-  if (!isPause) {
-    if (!inputMinutes || !inputSeconds) return;
+function startCountdown() {
+  if (isCounting) return; // Impede chamadas concorrentes de countdown
+  isCounting = true;
 
-    if (Number(inputMinutes.value) === 0 && Number(inputSeconds.value) === 0) {
-      if (rounds) {
-        const [currentRound, totalRounds] = rounds.innerText.split("/");
-        const newRound = (Number(currentRound) + 1).toString();
-        rounds.innerHTML = `${newRound}/<span class="total-rounds">${totalRounds}</span>`;
-
-        inputMinutes.value = minutesDigited;
-        inputSeconds.value = secondsDigited;
-        countdown();
+  function countdownStep() {
+    if (!isPause) {
+      if (
+        Number(inputMinutes!.value) === 0 &&
+        Number(inputSeconds!.value) === 0
+      ) {
+        if (isBreak) {
+          // Após o break, atualiza o contador de rounds
+          handleRounds();
+        } else {
+          // Inicia o break
+          startBreak();
+        }
+      } else if (Number(inputSeconds!.value) > 0) {
+        inputSeconds!.value = (Number(inputSeconds!.value) - 1)
+          .toString()
+          .padStart(2, "0");
+      } else {
+        inputMinutes!.value = (Number(inputMinutes!.value) - 1)
+          .toString()
+          .padStart(2, "0");
+        inputSeconds!.value = "59";
       }
-      return;
-    }
 
-    if (Number(inputSeconds.value) > 0) {
-      inputSeconds.value = String(Number(inputSeconds.value) - 1).padStart(
-        2,
-        "0"
-      );
-    } else if (Number(inputMinutes.value) > 0) {
-      inputMinutes.value = String(Number(inputMinutes.value) - 1).padStart(
-        2,
-        "0"
-      );
-      inputSeconds.value = "59";
+      intervalId = window.setTimeout(countdownStep, 1000);
+    } else {
+      isCounting = false;
     }
   }
 
-  intervalId = setTimeout(countdown, 1000);
+  countdownStep();
 }
 
-function play() {
-  playBtn?.addEventListener("click", () => {
-    console.log(inputMinutes?.value, inputSeconds?.value);
-    if (inputMinutes?.value === "00" && inputSeconds?.value === "00") return;
+function startBreak() {
+  isBreak = true;
+  breakTag?.classList.remove("hidden");
 
-    if (isPause) {
-      isPause = false;
+  // Define o tempo do break (por exemplo, 5 segundos)
+  inputMinutes!.value = "00";
+  inputSeconds!.value = "05";
 
-      inputs.forEach((input) => {
-        input.disabled = true;
-      });
+  startCountdown(); // Inicia o countdown para o break
+}
 
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
+function handleRounds() {
+  if (rounds) {
+    const [currentRound, totalRounds] = rounds.innerText.split("/");
+    const newRound = (Number(currentRound) + 1).toString();
+    rounds.innerHTML = `${newRound}/<span class="total-rounds">${totalRounds}</span>`;
 
-      countdown();
+    breakTag?.classList.add("hidden");
+    isBreak = false;
+
+    // Redefine o tempo do próximo round
+    inputMinutes!.value = minutesDigited.padStart(2, "0");
+    inputSeconds!.value = secondsDigited.padStart(2, "0");
+
+    startCountdown(); // Inicia o próximo round
+  }
+}
+
+playBtn?.addEventListener("click", () => {
+  if (inputMinutes?.value === "00" && inputSeconds?.value === "00") return;
+
+  if (isPause) {
+    isPause = false;
+
+    playBtn?.classList.add("hide");
+    pauseBtn?.classList.remove("hide");
+    replayBtn?.classList.add("hide");
+
+    inputs.forEach((input) => {
+      input.disabled = true;
+    });
+
+    if (!isCounting) {
+      // Certifica-se de que a contagem seja iniciada somente uma vez
+      startCountdown();
     }
+  }
+});
 
-    return;
-  });
-}
-play();
+pauseBtn?.addEventListener("click", () => {
+  if (!isPause) {
+    isPause = true;
 
-function pause() {
-  pauseBtn?.addEventListener("click", () => {
-    if (!isPause) {
-      isPause = true;
+    inputs.forEach((input) => {
+      input.disabled = false;
+    });
 
-      inputs.forEach((input) => {
-        input.disabled = false;
-      });
-
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
+    if (intervalId) {
+      clearTimeout(intervalId);
+      isCounting = false; // Para a contagem
     }
-    return;
-  });
-}
-pause();
+  }
+});

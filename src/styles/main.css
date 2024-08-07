@@ -13,13 +13,13 @@
 }
 
 .icon-actived {
-  fill: #008efa;
+  fill: #2af5ff;
 }
 
 .input-actived {
-  caret-color: #008efa;
+  caret-color: #2af5ff;
   border-radius: 40px;
-  border: solid 2px #008efa;
+  border: solid 2px #2af5ff;
   padding: 1rem;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .total-rounds {
-  color: #008efa;
+  color: #2af5ff;
 }
 
 .light-mode {
@@ -48,12 +48,12 @@
 
   header button svg,
   footer button svg,
-  .reset-rounds {
+  main > svg {
     fill: #030712;
   }
 
   .icon-actived {
-    fill: #008efa;
+    fill: #2af5ff;
   }
 
   .input-actived {

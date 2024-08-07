@@ -601,8 +601,20 @@ video {
   margin-right: 0.5rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .flex {
   display: flex;
+}
+
+.hidden {
+  display: none;
 }
 
 .h-16 {
@@ -649,6 +661,11 @@ video {
 .bg-slate-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.bg-slate-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
 .p-10 {
@@ -710,6 +727,21 @@ video {
   color: rgb(250 246 235 / var(--tw-text-opacity));
 }
 
+.text-\[\#53ff45\] {
+  --tw-text-opacity: 1;
+  color: rgb(83 255 69 / var(--tw-text-opacity));
+}
+
+.text-\[\#ff004c\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 0 76 / var(--tw-text-opacity));
+}
+
+.text-\[\#ff006a\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 0 106 / var(--tw-text-opacity));
+}
+
 .blur {
   --tw-blur: blur(8px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -726,13 +758,13 @@ video {
 }
 
 .icon-actived {
-  fill: #008efa;
+  fill: #2af5ff;
 }
 
 .input-actived {
-  caret-color: #008efa;
+  caret-color: #2af5ff;
   border-radius: 40px;
-  border: solid 2px #008efa;
+  border: solid 2px #2af5ff;
   padding: 1rem;
 }
 
@@ -752,7 +784,7 @@ video {
 }
 
 .total-rounds {
-  color: #008efa;
+  color: #2af5ff;
 }
 
 .light-mode {
@@ -760,11 +792,11 @@ video {
   color: #030712;
   header button svg,
   footer button svg,
-  .reset-rounds {
+  main > svg {
     fill: #030712;
   }
   .icon-actived {
-    fill: #008efa;
+    fill: #2af5ff;
   }
   .input-actived {
     caret-color: #030712;
