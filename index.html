@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <link rel="shortcut icon" href="public/assets/icons/clock.svg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,10 +12,18 @@
     />
     <link rel="stylesheet" href="./src/styles/tailwind.css" />
     <script type="module" src="src/index.ts" defer></script>
-    <title>Minimaldoro</title>
+    <title>Minimaldoro | Pomodoro Timer</title>
   </head>
 
   <body class="min-h-screen flex flex-col bg-gray-950">
+    <audio id="background-sound" loop>
+      <source src="./public/assets/music/sound.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="break-sound" loop>
+      <source src="./public/assets/music/break.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="container" class="flex flex-col flex-grow justify-between p-10">
       <header class="flex justify-center items-center h-16">
         <div id="toggle-mode" class="toggle-mode">
@@ -53,31 +61,31 @@
       </header>
 
       <main class="flex flex-col items-center justify-center flex-grow">
-        <!-- <span id="reset-rounds" class="cursor-pointer mb-2 uppercase font-bold tracking-widest text-textColor text-sm bg-slate-800 rounded-full  px-3">reset</span> -->
         <svg
-       id="reset-rounds"
-       class=".reset-rounds cursor-pointer mb-2"
-       xmlns="http://www.w3.org/2000/svg"
-       height="25px"
-       viewBox="0 -960 960 960"
-       width="25px"
-       fill="#faf6eb"
-       >
-         <path
-         d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
-       />
-       </svg>
-        <div
-          id="rounds-container "
-          class="rounds-container bg-slate-800 rounded-full py-1 px-4"
+        id="reset-rounds"
+        class=".reset-rounds cursor-pointer mb-2"
+        xmlns="http://www.w3.org/2000/svg"
+        height="25px"
+        viewBox="0 -960 960 960"
+        width="25px"
+        fill="#faf6eb"
         >
+        <path
+        d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
+        />
+      </svg>
+      <div
+      id="rounds-container "
+      class="rounds-container bg-slate-800 rounded-full py-1 px-4"
+      >
 
-          <span
-            id="rounds"
-            class="rounds font-fontInter text-2xl text-textColor font-bold"
-            >1/<span class="total-rounds">4</span></span
-          >
-        </div>
+      <span
+      id="rounds"
+      class="rounds font-fontInter text-2xl text-textColor font-bold"
+      >1/<span class="total-rounds">4</span></span
+      >
+    </div>
+    <span id="break-tag" class="cursor-pointer mt-4 uppercase font-bold tracking-widest text-[#ff006a] text-sm bg-slate-800 rounded-full hidden px-3">break</span>
 
         <div id="timer" class="timer my-6 cursor-pointer">
           <input
@@ -152,9 +160,10 @@
       </main>
 
       <footer id="footer" class="flex justify-center items-center h-16">
-        <button class="sound-on icon-actived">
+        <button class="sound-on">
           <svg
             id="sound-on"
+            class="hide"
             xmlns="http://www.w3.org/2000/svg"
             height="40px"
             viewBox="0 -960 960 960"
@@ -169,7 +178,6 @@
         <button class="sound-off">
           <svg
             id="sound-off"
-            class="hide"
             xmlns="http://www.w3.org/2000/svg"
             height="40px"
             viewBox="0 -960 960 960"
