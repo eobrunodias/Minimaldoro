@@ -1,5 +1,5 @@
 import { handleToggleTheme } from "./scripts/theme";
-import { pauseBtn, playBtn, replayBtn } from "./scripts/controls";
+import { pause, play, replay } from "./scripts/controls";
 import "./scripts/sound";
 import "./scripts/timer";
 import "./scripts/rounds";
@@ -7,6 +7,6 @@ import "./scripts/rounds";
 handleToggleTheme();
 
 // Controls
-pauseBtn();
-playBtn();
-replayBtn();
+pause();
+play();
+replay();

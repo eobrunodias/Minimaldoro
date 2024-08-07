@@ -1,5 +1,8 @@
-const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
-const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
+const inputSeconds: HTMLInputElement | null =
+  document.querySelector<HTMLInputElement>("#seconds");
+const inputMinutes: HTMLInputElement | null =
+  document.querySelector<HTMLInputElement>("#minutes");
+
 const playBtn = document.querySelector<HTMLButtonElement>("#play");
 const pauseBtn = document.querySelector<HTMLButtonElement>("#pause");
 const replayBtn = document.querySelector<HTMLButtonElement>("#replay");

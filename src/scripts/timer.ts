@@ -1,14 +1,18 @@
 import { addClass, removeClass } from "../utils/handle-class-atribute";
+import {
+  breakTag,
+  inputMinutes,
+  inputs,
+  inputSeconds,
+  pauseBtn,
+  playBtn,
+  replayBtn,
+  resetRounds,
+  rounds,
+} from "./elements";
 
-const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
-const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
-const inputs = document.querySelectorAll("input");
-const playBtn = document.querySelector<HTMLButtonElement>("#play");
-const pauseBtn = document.querySelector<HTMLButtonElement>("#pause");
-const replayBtn = document.querySelector<HTMLButtonElement>("#replay");
-const rounds = document.querySelector<HTMLSpanElement>("#rounds");
-const resetRounds = document.querySelector<HTMLSpanElement>("#reset-rounds");
-const breakTag = document.querySelector<HTMLSpanElement>("#break-tag");
+export const timerClear =
+  inputSeconds?.value === "00" && inputMinutes?.value === "00";
 
 let isPause = true;
 let minutesDigited = "00";
@@ -16,6 +20,16 @@ let secondsDigited = "00";
 let isCounting = false;
 let isBreak = false;
 let intervalId: number | undefined;
+
+function configTimer(minutes?: string, seconds?: string) {
+  if (inputMinutes && minutes) {
+    inputMinutes.value = minutes.padStart(2, "0");
+  }
+
+  if (inputSeconds && seconds) {
+    inputSeconds.value = seconds.padStart(2, "0");
+  }
+}
 
 resetRounds?.addEventListener("click", () => {
   if (rounds) {
@@ -30,27 +44,31 @@ resetRounds?.addEventListener("click", () => {
 });
 
 inputMinutes?.addEventListener("input", () => {
-  if (inputMinutes.value.length > 2) {
-    inputMinutes.value = inputMinutes.value.slice(0, 2);
-  }
+  if (inputMinutes?.value) {
+    if (inputMinutes.value.length > 2) {
+      configTimer(inputMinutes?.value.slice(0, 2));
+    }
 
-  if (Number(inputMinutes.value) > 59) {
-    inputMinutes.value = "59";
-  }
+    if (Number(inputMinutes.value) > 59) {
+      configTimer("59");
+    }
 
-  minutesDigited = inputMinutes.value;
+    minutesDigited = inputMinutes.value;
+  }
 });
 
 inputSeconds?.addEventListener("input", () => {
-  if (inputSeconds.value.length > 2) {
-    inputSeconds.value = inputSeconds.value.slice(0, 2);
-  }
+  if (inputSeconds?.value) {
+    if (inputSeconds.value.length > 2) {
+      configTimer(inputSeconds?.value.slice(0, 2));
+    }
 
-  if (Number(inputSeconds.value) > 59) {
-    inputSeconds.value = "59";
-  }
+    if (Number(inputSeconds.value) > 59) {
+      configTimer("59");
+    }
 
-  secondsDigited = inputSeconds.value;
+    secondsDigited = inputSeconds.value;
+  }
 });
 
 inputs?.forEach((input) => {
@@ -67,39 +85,43 @@ inputs?.forEach((input) => {
   });
 });
 
-inputMinutes?.addEventListener("focus", () =>
-  addClass(inputMinutes, "input-actived")
-);
+inputMinutes?.addEventListener("focus", () => {
+  if (inputMinutes) {
+    addClass(inputMinutes, "input-actived");
+  }
+});
 
-inputSeconds?.addEventListener("focus", () =>
-  addClass(inputSeconds, "input-actived")
-);
+inputSeconds?.addEventListener("focus", () => {
+  if (inputSeconds) {
+    addClass(inputSeconds, "input-actived");
+  }
+});
 
 inputMinutes?.addEventListener("blur", () => {
   if (inputMinutes) {
     removeClass(inputMinutes, "input-actived");
-  }
 
-  if (inputMinutes.value === "") {
-    inputMinutes.value = "00";
-  }
+    if (inputMinutes.value === "") {
+      inputMinutes.value = "00";
+    }
 
-  if (inputMinutes.value.length < 2) {
-    inputMinutes.value = inputMinutes.value.padStart(2, "0");
+    if (inputMinutes.value.length < 2) {
+      inputMinutes.value = inputMinutes.value.padStart(2, "0");
+    }
   }
 });
 
 inputSeconds?.addEventListener("blur", () => {
   if (inputSeconds) {
     removeClass(inputSeconds, "input-actived");
-  }
 
-  if (inputSeconds.value === "") {
-    inputSeconds.value = "00";
-  }
+    if (inputSeconds.value === "") {
+      inputSeconds.value = "00";
+    }
 
-  if (inputSeconds.value.length < 2) {
-    inputSeconds.value = inputSeconds.value.padStart(2, "0");
+    if (inputSeconds.value.length < 2) {
+      inputSeconds.value = inputSeconds.value.padStart(2, "0");
+    }
   }
 });
 
@@ -169,7 +191,14 @@ function handleRounds() {
 }
 
 playBtn?.addEventListener("click", () => {
-  if (inputMinutes?.value === "00" && inputSeconds?.value === "00") return;
+  if (inputMinutes?.value === "00" && inputSeconds?.value === "00") {
+    alert(
+      `      =============== TIMER ZERADO ===============
+      Selecione e digite no timer, o tempo que desejar para começar! :)`
+    );
+
+    return;
+  }
 
   if (isPause) {
     isPause = false;

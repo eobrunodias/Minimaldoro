@@ -6,22 +6,22 @@ import {
   replayBtn,
 } from "./elements";
 
+import { timerClear } from "./timer";
+
+export function togglePlayAndPause() {
+  pauseBtn?.classList.toggle("hide");
+  playBtn?.classList.toggle("hide");
+  replayBtn?.classList.toggle("hide");
+}
+
 export function pause() {
-  pauseBtn?.addEventListener("click", () => {
-    pauseBtn?.classList.add("hide");
-    playBtn?.classList.remove("hide");
-    replayBtn?.classList.remove("hide");
-  });
+  pauseBtn?.addEventListener("click", togglePlayAndPause);
 }
 
 export function play() {
-  playBtn?.addEventListener("click", () => {
-    if (inputSeconds?.value === "00" && inputMinutes?.value === "00") return;
-
-    playBtn?.classList.add("hide");
-    pauseBtn?.classList.remove("hide");
-    replayBtn?.classList.add("hide");
-  });
+  if (!timerClear) {
+    playBtn?.addEventListener("click", togglePlayAndPause);
+  }
 }
 
 export function replay() {
