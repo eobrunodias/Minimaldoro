@@ -593,6 +593,10 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -625,10 +629,6 @@ video {
   align-items: center;
 }
 
-.justify-end {
-  justify-content: flex-end;
-}
-
 .justify-center {
   justify-content: center;
 }
@@ -659,8 +659,19 @@ video {
   padding: 0.75rem;
 }
 
-.p-4 {
-  padding: 1rem;
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .font-fontInter {
@@ -677,8 +688,21 @@ video {
   line-height: 1;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em;
 }
 
 .text-textColor {
@@ -702,13 +726,13 @@ video {
 }
 
 .icon-actived {
-  fill: #63a375;
+  fill: #008efa;
 }
 
 .input-actived {
-  caret-color: #63a375;
+  caret-color: #008efa;
   border-radius: 40px;
-  border: solid 2px #63a375;
+  border: solid 2px #008efa;
   padding: 1rem;
 }
 
@@ -727,12 +751,20 @@ video {
   box-sizing: content-box;
 }
 
+.total-rounds {
+  color: #008efa;
+}
+
 .light-mode {
   background-color: #faf6eb;
   color: #030712;
   header button svg,
-  footer button svg {
+  footer button svg,
+  .reset-rounds {
     fill: #030712;
+  }
+  .icon-actived {
+    fill: #008efa;
   }
   .input-actived {
     caret-color: #030712;
@@ -767,6 +799,10 @@ video {
 }
 
 /* Apply */
+
+.focus\:cursor-text:focus {
+  cursor: text;
+}
 
 @media (min-width: 768px) {
   .md\:text-8xl {

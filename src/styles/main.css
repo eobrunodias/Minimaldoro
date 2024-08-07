@@ -13,13 +13,13 @@
 }
 
 .icon-actived {
-  fill: #63a375;
+  fill: #008efa;
 }
 
 .input-actived {
-  caret-color: #63a375;
+  caret-color: #008efa;
   border-radius: 40px;
-  border: solid 2px #63a375;
+  border: solid 2px #008efa;
   padding: 1rem;
 }
 
@@ -38,13 +38,22 @@
   box-sizing: content-box;
 }
 
+.total-rounds {
+  color: #008efa;
+}
+
 .light-mode {
   background-color: #faf6eb;
   color: #030712;
 
   header button svg,
-  footer button svg {
+  footer button svg,
+  .reset-rounds {
     fill: #030712;
+  }
+
+  .icon-actived {
+    fill: #008efa;
   }
 
   .input-actived {
