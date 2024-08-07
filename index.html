@@ -63,16 +63,23 @@
           >
         </div>
         <div id="timer" class="timer my-6 cursor-pointer">
-          <span
+          <input
             id="minutes"
-            class="minutes font-fontInter md:text-8xl text-7xl text-textColor font-bold"
-            >00</span
-          >
+            class="minutes input-time"
+            type="number"
+            value="00"
+            maxlength="2"
+            max="2"
+            >
           <span class="md:text-8xl text-7xl font-bold text-textColor">:</span>
-          <span
+          <input
             id="seconds"
-            class="seconds font-fontInter md:text-8xl text-7xl text-textColor font-bold"
-            >00</span
+            class="seconds input-time"
+            type="number"
+            value="00"
+            maxlength="2"
+            max="2"
+            ></input
           >
         </div>
         <div

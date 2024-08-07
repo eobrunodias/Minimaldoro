@@ -705,10 +705,14 @@ video {
   fill: #63a375;
 }
 
-.input-time {
+.input-actived {
   caret-color: #63a375;
   border-radius: 40px;
   border: solid 2px #63a375;
+  padding: 1rem;
+}
+
+.input-time {
   /* caret-shape: inherit; */
   font-family: "Chivo Mono";
   color: #faf6eb;
@@ -719,7 +723,6 @@ video {
   line-height: 1rem;
   width: 2ch;
   text-align: center;
-  padding: 1rem;
   margin: 0;
   box-sizing: content-box;
 }
@@ -731,10 +734,14 @@ video {
   footer button svg {
     fill: #030712;
   }
+  .input-actived {
+    caret-color: #030712;
+    border-radius: 40px;
+    border: solid 2px #030712;
+    padding: 1rem;
+  }
   .input-time {
     color: #030712;
-    border: solid 2px #030712;
-    caret-color: #030712;
   }
   .timer span {
     color: #030712;

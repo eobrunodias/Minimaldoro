@@ -1,69 +1,87 @@
-const displayMinutes = document.querySelector("#minutes");
-const displaySeconds = document.querySelector("#seconds");
+const inputSeconds = document.querySelector<HTMLInputElement>("#seconds");
+const inputMinutes = document.querySelector<HTMLInputElement>("#minutes");
+const play = document.querySelector<HTMLInputElement>("#play");
 
-displayMinutes?.addEventListener("click", (e) => {
-  const target = e.target as HTMLElement;
+let valueMinutes = inputMinutes?.getAttribute("value");
+let valueSeconds = inputSeconds?.getAttribute("value");
 
-  const minutesElement = target as HTMLElement;
-  const currentMinutes = minutesElement.textContent?.trim() || "00";
-  const inputMinutes = document.createElement("input");
+inputMinutes?.getAttribute("value");
 
-  inputMinutes.classList.add("input-time");
+function addClass(element: Element, className: String) {
+  element?.classList.add(className as string);
+}
 
-  inputMinutes.type = "number";
-  inputMinutes.value = currentMinutes.padStart(2, "0");
-  inputMinutes.min = "0";
-  inputMinutes.max = "60";
-  inputMinutes.step = "1";
+function removeClass(element: Element, className: String) {
+  element?.classList.remove(className as string);
+}
 
-  inputMinutes.addEventListener("blur", () => {
-    let value = parseInt(inputMinutes.value, 10);
-    if (isNaN(value) || value < 0) value = 0;
-    if (value > 60) value = 60;
-    minutesElement.textContent = value.toString().padStart(2, "0");
-    inputMinutes.replaceWith(minutesElement);
-  });
+function addStyleMinutes() {
+  if (inputMinutes) {
+    addClass(inputMinutes, "input-actived");
+    // valueMinutes = inputMinutes.innerHTML;
+  }
+}
 
-  minutesElement.replaceWith(inputMinutes);
-  inputMinutes.focus();
+inputMinutes?.addEventListener("input", (e: Event) => {
+  const target = e.target as HTMLInputElement;
+
+  if (target.value === "e") {
+    target.value;
+  }
+
+  if (target.value.length > 2) {
+    target.value = target.value.slice(0, 2);
+  }
+
+  if (target.value > "59") {
+    target.value = "59";
+  }
+
+  valueMinutes = target.value;
+  console.log(valueMinutes);
+  console.log(target.value);
+
+  let minutesConverted = Number(valueMinutes);
+  console.log(minutesConverted);
+  console.log(valueMinutes);
 });
 
-displaySeconds?.addEventListener("click", (e) => {
-  const target = e.target as HTMLElement;
+// prevents the caracter "e"
+inputMinutes?.addEventListener("keydown", (e: KeyboardEvent) => {
+  if (e.key === "e" || e.key === "E") {
+    e.preventDefault();
+  }
+});
 
-  const secondsElement = target as HTMLElement;
-  const currentSeconds = secondsElement.textContent || "00";
-  const inputSeconds = document.createElement("input");
+inputMinutes?.addEventListener("focus", addStyleMinutes);
 
-  inputSeconds.classList.add("input-time");
-
-  inputSeconds.type = "number";
-  inputSeconds.value = currentSeconds.padStart(2, "0");
-  inputSeconds.min = "0";
-  inputSeconds.max = "59";
-  inputSeconds.step = "1";
-  inputSeconds.maxLength = 2;
-
-  if (parseInt(inputSeconds.value) > 60) {
-    inputSeconds.value = "59";
+inputMinutes?.addEventListener("blur", (e) => {
+  if (inputMinutes) {
+    removeClass(inputMinutes, "input-actived");
   }
 
-  if (inputSeconds.value.length > 2) {
-    secondsElement.textContent = inputSeconds.value.slice(0, 2);
+  const target = e.target as HTMLInputElement;
+
+  if (target.value === "") {
+    target.value = "00";
   }
+});
 
-  secondsElement.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      secondsElement.textContent = inputSeconds.value.padStart(2, "0");
-      inputSeconds.replaceWith(secondsElement);
-    }
-  });
+console.log("cheguei aq");
+console.log(valueMinutes);
 
-  inputSeconds.addEventListener("blur", () => {
-    secondsElement.textContent = inputSeconds.value.padStart(2, "0");
-    inputSeconds.replaceWith(secondsElement);
-  });
+play?.addEventListener("click", () => {
+  let minutesConverted = Number(valueMinutes);
 
-  secondsElement.replaceWith(inputSeconds);
-  inputSeconds.focus();
+  // fora do while
+  console.log("fora");
+  if (minutesConverted > 0) {
+    console.log("dentro");
+
+    setInterval(() => {
+      --minutesConverted;
+      console.log(minutesConverted);
+      console.log(valueMinutes);
+    }, 1000);
+  }
 });
