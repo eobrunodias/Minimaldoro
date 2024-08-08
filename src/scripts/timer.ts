@@ -60,11 +60,11 @@ inputMinutes?.addEventListener("input", () => {
 inputSeconds?.addEventListener("input", () => {
   if (inputSeconds?.value) {
     if (inputSeconds.value.length > 2) {
-      configTimer(inputSeconds?.value.slice(0, 2));
+      configTimer(undefined, inputSeconds?.value.slice(0, 2));
     }
 
     if (Number(inputSeconds.value) > 59) {
-      configTimer("59");
+      configTimer(undefined, "59");
     }
 
     secondsDigited = inputSeconds.value;
@@ -126,7 +126,7 @@ inputSeconds?.addEventListener("blur", () => {
 });
 
 function startCountdown() {
-  if (isCounting) return; // Impede chamadas concorrentes de countdown
+  if (isCounting) return;
   isCounting = true;
 
   function countdownStep() {
@@ -136,10 +136,8 @@ function startCountdown() {
         Number(inputSeconds!.value) === 0
       ) {
         if (isBreak) {
-          // Após o break, atualiza o contador de rounds
           handleRounds();
         } else {
-          // Inicia o break
           startBreak();
         }
       } else if (Number(inputSeconds!.value) > 0) {
@@ -166,11 +164,10 @@ function startBreak() {
   isBreak = true;
   breakTag?.classList.remove("hidden");
 
-  // Define o tempo do break (por exemplo, 5 segundos)
-  inputMinutes!.value = "00";
-  inputSeconds!.value = "05";
+  inputMinutes!.value = "05";
+  inputSeconds!.value = "00";
 
-  startCountdown(); // Inicia o countdown para o break
+  startCountdown();
 }
 
 function handleRounds() {
@@ -182,20 +179,16 @@ function handleRounds() {
     breakTag?.classList.add("hidden");
     isBreak = false;
 
-    // Redefine o tempo do próximo round
     inputMinutes!.value = minutesDigited.padStart(2, "0");
     inputSeconds!.value = secondsDigited.padStart(2, "0");
 
-    startCountdown(); // Inicia o próximo round
+    startCountdown();
   }
 }
 
 playBtn?.addEventListener("click", () => {
   if (inputMinutes?.value === "00" && inputSeconds?.value === "00") {
-    alert(
-      `      =============== TIMER ZERADO ===============
-      Selecione e digite no timer, o tempo que desejar para começar! :)`
-    );
+    alert(`⏱ Time is zero, please enter a time before starting.`);
 
     return;
   }
@@ -212,7 +205,6 @@ playBtn?.addEventListener("click", () => {
     });
 
     if (!isCounting) {
-      // Certifica-se de que a contagem seja iniciada somente uma vez
       startCountdown();
     }
   }
@@ -228,7 +220,7 @@ pauseBtn?.addEventListener("click", () => {
 
     if (intervalId) {
       clearTimeout(intervalId);
-      isCounting = false; // Para a contagem
+      isCounting = false;
     }
   }
 });

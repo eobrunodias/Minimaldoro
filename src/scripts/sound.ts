@@ -4,12 +4,14 @@ import {
   breakTag,
   soundOff,
   soundOn,
+  pauseBtn,
 } from "./elements";
 
 let isSoundOn = false;
+let isPaused = pauseBtn?.classList.contains("hide");
 
 if (backgroundMusic) {
-  backgroundMusic.volume = 0.1;
+  backgroundMusic.volume = 0.5;
   backgroundMusic.pause();
 }
 
@@ -23,14 +25,14 @@ soundOff?.addEventListener("click", () => {
   soundOn?.classList.remove("hide");
   isSoundOn = true;
 
-  if (breakTag?.classList.contains("hidden")) {
-    console.log("Playing background music");
-    backgroundMusic?.play();
-    breakMusic?.pause();
-  } else {
-    console.log("Playing break music");
-    breakMusic?.play();
-    backgroundMusic?.pause();
+  if (!isPaused) {
+    if (breakTag?.classList.contains("hidden")) {
+      backgroundMusic?.play();
+      breakMusic?.pause();
+    } else {
+      breakMusic?.play();
+      backgroundMusic?.pause();
+    }
   }
 });
 
@@ -39,7 +41,6 @@ soundOn?.addEventListener("click", () => {
   soundOff?.classList.remove("hide");
   isSoundOn = false;
 
-  console.log("Pausing all music");
   backgroundMusic?.pause();
   breakMusic?.pause();
 });
@@ -51,14 +52,11 @@ if (breakTag) {
         mutation.type === "attributes" &&
         mutation.attributeName === "class"
       ) {
-        console.log("Mutation observed:", mutation);
-        if (isSoundOn) {
+        if (isSoundOn && !isPaused) {
           if (breakTag?.classList.contains("hidden")) {
-            console.log("Observer: Playing background music");
             backgroundMusic?.play();
             breakMusic?.pause();
           } else {
-            console.log("Observer: Playing break music");
             breakMusic?.play();
             backgroundMusic?.pause();
           }
@@ -70,4 +68,22 @@ if (breakTag) {
   observer.observe(breakTag, { attributes: true });
 } else {
   console.error("breakTag not found");
+}
+
+if (pauseBtn) {
+  const pauseObserver = new MutationObserver(() => {
+    isPaused = pauseBtn?.classList.contains("hide");
+    if (isPaused) {
+      backgroundMusic?.pause();
+      breakMusic?.pause();
+    } else if (isSoundOn) {
+      if (breakTag?.classList.contains("hidden")) {
+        backgroundMusic?.play();
+      } else {
+        breakMusic?.play();
+      }
+    }
+  });
+
+  pauseObserver.observe(pauseBtn, { attributes: true });
 }
