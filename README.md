@@ -1,5 +1,7 @@
 # ⏱ Minimaldoro
 
+🇧🇷 [Portuguese](README_pt-br.md)
+
 ## 📜 About the Project
 
 Pomodoro timer with a minimalist and intuitive interface. Pomodoro is a time management technique that consists of dividing work into periods, followed by short breaks in between.
